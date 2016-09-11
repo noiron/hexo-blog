@@ -24,6 +24,9 @@ tags: [webpack, react.js, es6]
 
 以上就是我们的项目需要的全部文件了。
 
+接下来我会将这个项目的构建过程分解成几个步骤，你只要按照这些步骤依次进行即可。
+
+<!-- more -->
 
 ## 初始化项目
 
@@ -39,6 +42,7 @@ tags: [webpack, react.js, es6]
 
 `npm init` 命令的作用就是初始化一个项目，你可以发现项目文件夹内多出了一个 `package.json` 文件，它的内容如下：
 
+```javascript
     // 按照默认设置生成的 package.json 文件
     {
       "name": "react-webpack-boilerplate",
@@ -52,15 +56,27 @@ tags: [webpack, react.js, es6]
       "author": "",
       "license": "ISC"
     }
+```
 
-项目的运行需要依赖各种 npm 包，需要在文件的 "dependencies" 或 "devDependencies" 项下写明 npm 包的名称及版本。现在这个项目还是空的，这里还没有这两项。
+项目的运行需要依赖各种 npm 包，需要在文件的 "dependencies" 或 "devDependencies" 项下写明 npm 包的名称及版本。现在这个项目还是空的，所以这里还没有这两项。
 
-可以使用 cnpm 来代替。cnpm 的介绍。
+由于直接用 npm 安装的速度很慢，我们可以考虑用 cnpm install 命令来代替 npm install 命令。
+
+CNPM 是淘宝建立的一个 NPM 镜像，由于服务器在国内，速度自然也就快多了。
+
+    // 安装 cnpm
+    $ npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+完成后，你就可以用 cnpm install 来安装所需的 npm 包了。
+
+> [淘宝 NPM 镜像](https://npm.taobao.org/)
 
 
 ## 安装及配置 webpack
 
 ### webpack 是什么？
+
+webpack 是一个打包工具。
 
 ### webpack 的安装
 
@@ -82,7 +98,11 @@ tags: [webpack, react.js, es6]
 
 你可以选择将 webpack 安装在全局中，或者安装在这一个项目中。（全局安装和本地安装的区别）
 
-既然我们已经安装好了 webpack，那就先来测试一下它的打包功能。
+选择全局安装：
+
+    $ cnpm install webpack -g 
+
+既然我们已经将 webpack 安装在了全局，那就先在命令行下测试一下它的打包功能。
 
 新建 `index.js` 文件，里面只有一行：
 
@@ -92,7 +112,7 @@ tags: [webpack, react.js, es6]
 
 运行一个最简单的 webpack 命令：
 
-    webpack index.js bundle.js
+    $ webpack index.js bundle.js
 
 它的意思是将 `index.js` 文件打包成名为 `bundle.js` 的文件，后一个参数是你想要生成的文件名称。
 
@@ -192,11 +212,159 @@ html 文件的引用路径改成：
 
 上述步骤可以到 step2 中查看。
 
+
+## 安装 React
+
 ## 有关 Babel 的一切
 
 ### 什么是 Babel？为什么要用 Babel？
+
+因为在 React 的项目中会用到 ES6(即ES2015) 的语法，而 ES6 还没有得到广泛的支持，所以我们需要借用 Babel 这个工具将我们使用了 ES6 语法的代码转换成 ES5 的语法，从而可以在更广泛的环境下运行。
+
 
 
 ### 怎么安装 Babel？
 
 babel.rc 文件是什么？
+
+我们需要安装这样的几个 package
+
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-0": "^6.5.0",
+
+添加一个 babel.rc 文件：
+
+{
+  "presets": ["es2015", "stage-0"]
+}
+
+将 webpack.config.js 文件做如下的修改：
+
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['babel'],
+      include: path.join(__dirname, 'src')
+    }]
+  },
+  devServer: {
+    stats: 'errors-only'
+  }
+
+output 这一项中加上：
+
+    publicPath: '/static/'
+
+server.js 修改：
+
+var server = new WebpackDevServer(webpack(config), {
+  stats: config.devServer.stats,
+    publicPath: config.output.publicPath
+});
+
+
+这样就可以在我们的项目使用 babel 来进行转码了。
+
+这一步可在 step 3 中查看。
+
+## 安装 React
+
+假设你已经对 React 有了一定的了解，React 是做什么的就不用再这里介绍了。
+
+安装 React 的 package 十分简单：
+
+npm install react react-dom --save
+
+为了能够让 babel 对 react 进行处理，再安装一个 babel-preset-react
+
+npm install babel-preset-react
+
+同时在 .babelrc 文件中也加入这一项：
+
+  "presets": ["es2015", "stage-0", "react"]
+
+
+新建一个基本的 React 组件试试看：
+
+首先在 index.html 中加上这样的一个元素：
+
+    <div id="app"></div>
+
+React 元素将在上面渲染。
+
+在 src 文件夹下新建两个文件 App.js index.js
+
+    ./src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App.js';
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+);
+
+
+./src/App.js
+import React, { Component } from 'react';
+
+export default class App extends Component {
+  render() {
+    console.log('%c%s', 'font-size:20px;color:red', 'Something happened.');
+
+    return (
+      <div>This is a react boilerplate project with webpack and es6.</div>
+    );
+  };
+}
+
+
+现在你可以 npm start 看看效果了。
+
+以上内容可以在 step4 文件夹中查看。
+
+## 安装 react-hot-loader
+
+其实到上一步为止，我们已经完成了一个完整的 react 模板项目，不过还缺一点，就是当我们在编辑器中修改了文件的时候，需要在浏览器里手动刷新，才能看到结果。我们可以利用一个名为 react-hot-loader 的工具来帮助我们实现浏览器自动刷新的效果。
+
+首先安装 react-hot-loader:
+
+    npm install react-hot-loader@^1.3.0 --save-dev
+
+这里加上了版本号是因为默认安装最新的 react-hot-loader 为（），设置会和下面的有所区别。
+
+在 server.js 中加一行：
+
+var server = new WebpackDevServer(webpack(config), {
+  stats: config.devServer.stats,
+  hot: true,
+  publicPath: config.output.publicPath
+});
+
+对 webpack.config.js 做如下修改：
+
+  entry: [
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './src/index'
+  ],
+
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['react-hot', 'babel'],
+      include: path.join(__dirname, 'src')
+    }]
+
+加入一个插件：
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
+
+这一步的内容可以查看 step5 文件夹。
+
+
+
+到此我们的这个模板项目就完成了。你可以在GitHub上看到完整的项目代码。
