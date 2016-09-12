@@ -7,7 +7,7 @@ tags: [webpack, react.js, es6]
 
 如果是一个刚接触 React 的新手，当学完了 React 的各种基本概念和语法之后，准备开始实际的开发工作时，他又会碰到各种新颖的名词：npm, webpack, babel, flux, es2015…… 如果以前接触过这些工具还好，否则为了建立一个简单的项目，还需要学习这一整套的流程，而在这中间又会碰上各种坑，这个过程将会非常痛苦。一个解决方案是去 GitHub 上寻找各种模板项目，用 React + webpack + ... 作为关键字搜索可以发现许多别人创建的空项目，你可以在其基础上稍作修改然后开始开发。我在学习的过程中就是这么做的，而之后对于其中的一些配置项仍是一知半解。
 
-这里从头开始创建一个模板项目，一方面希望能给看到这篇文章的人以帮助，另一方面也是加深我自己的理解。
+我在这里从头开始创建一个模板项目，并将过程记录下来，一方面希望能给看到这篇文章的人以帮助，另一方面也是加深我自己的理解。
 
 ## 项目结构
 
@@ -179,6 +179,7 @@ html 文件的引用路径改成：
 
 添加如下的 server.js 文件：
 
+```javascript
     // server.js
     var webpack = require('webpack');
     var WebpackDevServer = require('webpack-dev-server');
@@ -193,7 +194,10 @@ html 文件的引用路径改成：
       return console.log('listening at locahost:3000...');
     })
 
-(这里解释一下这个文件中的各项的意义)
+    var server = new WebpackDevServer(webpack(config));
+```
+
+这一句创建了一个 webpack dev server，这是一个 node.js express 服务器，关于它的用法可以见[这里的文档](https://webpack.github.io/docs/webpack-dev-server.html)。
 
 好了，现在你可以运行：
 
@@ -203,55 +207,73 @@ html 文件的引用路径改成：
 
 在 `package.json` 文件内加上这么一项：
 
+```javascript
   "scripts": {
     "start": "node server.js"
   },
+```
 
 你可以用 `npm start` 来代替上面的 `node server.js` 了，这两者是等价的。
 
 
-上述步骤可以到 step2 中查看。
+上述步骤可以到 step2 文件夹中查看。
 
-
-## 安装 React
 
 ## 有关 Babel 的一切
 
-### 什么是 Babel？为什么要用 Babel？
+### Babel 是什么？
 
 因为在 React 的项目中会用到 ES6(即ES2015) 的语法，而 ES6 还没有得到广泛的支持，所以我们需要借用 Babel 这个工具将我们使用了 ES6 语法的代码转换成 ES5 的语法，从而可以在更广泛的环境下运行。
 
+> [Babel 的官方网站](https://babeljs.io/)
 
 
 ### 怎么安装 Babel？
 
-babel.rc 文件是什么？
+在我们的项目中，需要安装这样的几个 package：
 
-我们需要安装这样的几个 package
+    $ npm install --save-dev babel-loader babel-core
 
-    "babel-core": "^6.14.0",
-    "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-0": "^6.5.0",
+在 Babel 6.x 之前的版本中，Babel 会执行一些默认的转换规则，而在 6.x 之后的版本，你需要显示地告诉 babel 你想执行什么转换。最简单的方法就是使用 preset，比如说 ES2015 Preset。
 
-添加一个 babel.rc 文件：
+    $ npm install babel-preset-es2015 --save-dev
 
-{
-  "presets": ["es2015", "stage-0"]
-}
+> Presets are sharable .babelrc configs or simply an array of babel plugins.
+
+我们这里还需要另一个名为 stage-0 的 Preset：
+
+    $ npm install babel-preset-es2015 --save-dev
+
+> 参考文档：
+> [Babel 的安装](https://babeljs.io/docs/setup/#installation)
+> [Presets](https://babeljs.io/docs/plugins/#presets)
+
+现在只要添加一个 .babelrc 文件，在里面写上如下内容即可：
+
+    {
+      "presets": ["es2015", "stage-0"]
+    }
+
+所以 .babelrc 文件是什么？
+
+
+
+
 
 将 webpack.config.js 文件做如下的修改：
 
-  module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'src')
-    }]
-  },
-  devServer: {
-    stats: 'errors-only'
-  }
+```javascript
+    module: {
+      loaders: [{
+        test: /\.js$/,
+        loaders: ['babel'],
+        include: path.join(__dirname, 'src')
+      }]
+    },
+    devServer: {
+      stats: 'errors-only'
+    }
+```
 
 output 这一项中加上：
 
@@ -259,10 +281,10 @@ output 这一项中加上：
 
 server.js 修改：
 
-var server = new WebpackDevServer(webpack(config), {
-  stats: config.devServer.stats,
-    publicPath: config.output.publicPath
-});
+    var server = new WebpackDevServer(webpack(config), {
+      stats: config.devServer.stats,
+        publicPath: config.output.publicPath
+    });
 
 
 这样就可以在我们的项目使用 babel 来进行转码了。
@@ -271,7 +293,7 @@ var server = new WebpackDevServer(webpack(config), {
 
 ## 安装 React
 
-假设你已经对 React 有了一定的了解，React 是做什么的就不用再这里介绍了。
+既然你在看这篇文章，相信你已经对 React 有了一定的了解，React 是做什么的就不用再多介绍了。
 
 安装 React 的 package 十分简单：
 
