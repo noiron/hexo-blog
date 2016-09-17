@@ -5,9 +5,11 @@ date:   2016-09-14
 tags: [webpack, react.js, es6]
 ---
 
-如果是一个刚接触 React 的新手，当学完了 React 的各种基本概念和语法之后，准备开始实际的开发工作时，他又会碰到各种新颖的名词：npm, webpack, babel, flux, es2015…… 如果以前接触过这些工具还好，否则为了建立一个简单的项目，还需要学习这一整套的流程，而在这中间又会碰上各种坑，这个过程将会非常痛苦。一个解决方案是去 GitHub 上寻找各种模板项目，用 React + webpack + ... 作为关键字搜索可以发现许多别人创建的空项目，你可以在其基础上稍作修改然后开始开发。我在学习的过程中就是这么做的，而之后对于其中的一些配置项仍是一知半解。
+如果是一个刚接触 React 的新手，当学完了 React 的各种基本概念和语法之后，准备开始实际的开发工作时，他又会碰到各种新颖的名词：npm, webpack, babel, flux, es2015…… 如果以前接触过这些工具还好，否则为了建立一个简单的项目，还需要学习这一整套的流程，而在这中间又会碰上各种坑，这个过程将会非常痛苦。一个解决方案是去 GitHub 上寻找各种模板项目，用 React + webpack + ... 作为关键字搜索可以发现许多别人创建的空项目，你可以在其基础上稍作修改然后开始开发。我在学习的过程中就是这么做的，但之后对其中的一些配置项仍是一知半解。
 
 我在这里从头开始创建一个模板项目，并将过程记录下来，一方面希望能给看到这篇文章的人以帮助，另一方面也是加深我自己的理解。
+
+最后完成的项目见这个项目：[react-webpack-babel-boilerplate](https://github.com/noiron/react-webpack-babel-boilerplate)，在建立这个项目过程中的步骤可见另一个项目：[create-react-boilerplate-steps](https://github.com/noiron/create-react-boilerplate-steps)，过程被分到了多个文件夹中。
 
 ## 项目结构
 
@@ -32,7 +34,7 @@ tags: [webpack, react.js, es6]
 
 首先我们新建一个名为 react-webpack-boilerplate 的文件夹，然后需要在命令行下对项目进行初始化。
 
-假设你已经对 NPM 有了基本的了解，在命令行下进入项目目录后，运行：
+你需要到 Node.js 的官网上下载 node.js 并安装，如果你已经对 NPM 有了基本的了解，可以在命令行下进入项目目录运行：
 
     npm init
 
@@ -76,13 +78,14 @@ CNPM 是淘宝建立的一个 NPM 镜像，由于服务器在国内，速度自�
 
 ### webpack 是什么？
 
-webpack 是一个打包工具。
+webpack 是一个打包工具，它能够将各种资源如 js、css、图片作为模块载入并进行打包。你可以从[GitHub上这个教程](https://github.com/petehunt/webpack-howto)
+开始学习 webpack 的基本用法。
 
 ### webpack 的安装
 
-继续在命令行下面运行：
+在命令行下面运行：
 
-    npm install webpack --save-dev
+    $ npm install webpack --save-dev
 
 这一句的作用的是给项目安装 webpack，现在查看项目文件夹，会发现多出了一个 `node_modules` 文件夹，这里就是存放项目所依赖的 npm 包的地方。
 
@@ -96,7 +99,7 @@ webpack 是一个打包工具。
 
 ### webpack 的测试
 
-你可以选择将 webpack 安装在全局中，或者安装在这一个项目中。（全局安装和本地安装的区别）
+你可以选择将 webpack 安装在全局中，或者安装在这一个项目中。全局安装时需要在命令后面加上 `-global` 或 `-g` 参数，这样你可以直接在命令行中使用 webpack 命令了。
 
 选择全局安装：
 
@@ -140,7 +143,7 @@ webpack 是一个打包工具。
 
 ### webpack 的配置文件
 
-我们可以在命令行下完成各种复杂的 webpack 操作，不过更方便的方法是利用配置文件。(命令行下的参数有哪些？)
+我们可以在命令行下完成各种复杂的 webpack 操作，不过更方便的方法是利用配置文件。
 
 新建 `webpack.config.js` 文件：
 
@@ -150,24 +153,47 @@ webpack 是一个打包工具。
     var webpack = require('webpack');
 
     module.exports = {
+      // webpack 进行打包的入口文件，这里 webpack 从根目录下的 index.js 开始进行打包
       entry: [
         './index'
       ],
+      // webpack 打包后的输出文件的路径
       output: {
-        path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js',
+        path: path.join(__dirname, 'dist'), // 文件放至当前路径下的 dist 文件夹
+        filename: 'bundle.js',  // 将打包后的输出文件命名为 bundle.js
       }
     }
 ```
-依次解释 webpack.config.js 中的各项。
 
-新建 a.js，用 require 语法。
-
-html 文件的引用路径改成：
+html 文件的引用路径相应地改成：
 
 ```html
     <script src="./dist/bundle.js"></script>
 ```
+
+再将 webpack 安装在本地：
+
+    $ npm install webpack --save-dev
+
+现在你可以运行 `webpack` 看看效果了。
+
+我们在上面的过程虽然称之为打包，但是我们只不过将一个 `index.js` 文件变成了 `bundle.js` 文件，文件的体积甚至还变大了。那看一下如果我们有两个 js 文件是如何处理的。
+
+新建 `a.js`:
+
+```javascript
+    var a = 1;
+    module.exports = a;
+```
+
+在 index.js 中加入下列语句：
+
+```javascript
+    var a = require('./a.js');
+    console.log('a = ', a);
+```
+
+再次用 `webpack` 命令打包，生成了新的 `bundle.js` 文件。好了，现在我们不需要用 `script` 标签分别来引入 `index.js` 和 `a.js` 两个文件了，直接引入 `bundle.js` 这一个就行了。如果我们有许多引用的资源，经过这样的打包过程，自然就方便多了。
 
 以上的步骤可以在 step1 文件夹内查看。
 
@@ -193,11 +219,29 @@ html 文件的引用路径改成：
       }
       return console.log('listening at locahost:3000...');
     })
+```
 
+```javascript
     var server = new WebpackDevServer(webpack(config));
 ```
 
 这一句创建了一个 webpack dev server，这是一个 node.js express 服务器，关于它的用法可以见[这里的文档](https://webpack.github.io/docs/webpack-dev-server.html)。
+
+
+
+在 webpack.config.js 的 output 这一项中加上：
+
+```javascript
+    publicPath: '/static/'
+```
+    
+server.js 修改：
+
+```javascript
+    var server = new WebpackDevServer(webpack(config), {
+      publicPath: config.output.publicPath
+    });
+```
 
 好了，现在你可以运行：
 
@@ -216,10 +260,17 @@ html 文件的引用路径改成：
 你可以用 `npm start` 来代替上面的 `node server.js` 了，这两者是等价的。
 
 
-上述步骤可以到 step2 文件夹中查看。
+上述步骤可以到 step2 文件夹中查看，运行下列命令：
+
+    $ npm i
+    $ npm start
+
+> webpack 的参考资料：
+> https://webpack.github.io/docs/tutorials/getting-started/
+> http://www.cnblogs.com/skylar/p/webpack-module-bundler.html
 
 
-## 有关 Babel 的一切
+## 关于 Babel 
 
 ### Babel 是什么？
 
@@ -248,16 +299,13 @@ html 文件的引用路径改成：
 > [Babel 的安装](https://babeljs.io/docs/setup/#installation)
 > [Presets](https://babeljs.io/docs/plugins/#presets)
 
-现在只要添加一个 .babelrc 文件，在里面写上如下内容即可：
+现在只要添加一个 .babelrc 文件即可，[babelrc](https://babeljs.io/docs/usage/babelrc/) 是 Babel 的配置文件，你可以在[这个页面](http://babeljs.io/docs/usage/options/)找到你可以加入文件中的各种选项。
+
+这里只需在 .babelrc 中写入如下内容即可：
 
     {
       "presets": ["es2015", "stage-0"]
     }
-
-所以 .babelrc 文件是什么？
-
-
-
 
 
 将 webpack.config.js 文件做如下的修改：
@@ -275,18 +323,6 @@ html 文件的引用路径改成：
     }
 ```
 
-output 这一项中加上：
-
-    publicPath: '/static/'
-
-server.js 修改：
-
-    var server = new WebpackDevServer(webpack(config), {
-      stats: config.devServer.stats,
-        publicPath: config.output.publicPath
-    });
-
-
 这样就可以在我们的项目使用 babel 来进行转码了。
 
 这一步可在 step 3 中查看。
@@ -297,50 +333,55 @@ server.js 修改：
 
 安装 React 的 package 十分简单：
 
-npm install react react-dom --save
+    $ npm install react react-dom --save
 
 为了能够让 babel 对 react 进行处理，再安装一个 babel-preset-react
 
-npm install babel-preset-react
+    $ npm install babel-preset-react
 
 同时在 .babelrc 文件中也加入这一项：
 
-  "presets": ["es2015", "stage-0", "react"]
+    "presets": ["es2015", "stage-0", "react"]
 
 
 新建一个基本的 React 组件试试看：
 
 首先在 index.html 中加上这样的一个元素：
 
+```html
     <div id="app"></div>
+```
 
 React 元素将在上面渲染。
 
 在 src 文件夹下新建两个文件 App.js index.js
 
+```javascript
     ./src/index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App.js';
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import App from './App.js';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-);
-
-
-./src/App.js
-import React, { Component } from 'react';
-
-export default class App extends Component {
-  render() {
-    console.log('%c%s', 'font-size:20px;color:red', 'Something happened.');
-
-    return (
-      <div>This is a react boilerplate project with webpack and es6.</div>
+    ReactDOM.render(
+      <App />,
+      document.getElementById('app')
     );
-  };
-}
+```
+
+```javascript
+    ./src/App.js
+    import React, { Component } from 'react';
+    
+    export default class App extends Component {
+      render() {
+        console.log('%c%s', 'font-size:20px;color:red', 'Something happened.');
+    
+        return (
+          <div>This is a react boilerplate project with webpack and es6.</div>
+        );
+      };
+    }
+```
 
 
 现在你可以 npm start 看看效果了。
@@ -355,35 +396,41 @@ export default class App extends Component {
 
     npm install react-hot-loader@^1.3.0 --save-dev
 
-这里加上了版本号是因为默认安装最新的 react-hot-loader 为（），设置会和下面的有所区别。
+这里加上了版本号是因为默认安装最新的 react-hot-loader v3.0.0-beta 版本，设置会和下面的有所区别。
 
 在 server.js 中加一行：
 
-var server = new WebpackDevServer(webpack(config), {
-  stats: config.devServer.stats,
-  hot: true,
-  publicPath: config.output.publicPath
-});
+```javascript
+    var server = new WebpackDevServer(webpack(config), {
+      stats: config.devServer.stats,
+      hot: true,
+      publicPath: config.output.publicPath
+    });
+```
 
 对 webpack.config.js 做如下修改：
 
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './src/index'
-  ],
+```javascript
+    entry: [
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+      './src/index'
+    ],
 
     loaders: [{
       test: /\.js$/,
       loaders: ['react-hot', 'babel'],
       include: path.join(__dirname, 'src')
     }]
+```
 
-加入一个插件：
+并加入一个插件：
 
+```javascript
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ]
+```
 
 这一步的内容可以查看 step5 文件夹。
 
