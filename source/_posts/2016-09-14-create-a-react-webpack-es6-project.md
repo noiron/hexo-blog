@@ -267,6 +267,7 @@ server.js 修改：
 
 > webpack 的参考资料：
 > https://webpack.github.io/docs/tutorials/getting-started/
+> https://medium.com/@rajaraodv/webpack-the-confusing-parts-58712f8fcad9#.81jvwhvmo
 > http://www.cnblogs.com/skylar/p/webpack-module-bundler.html
 
 
@@ -434,6 +435,6 @@ React 元素将在上面渲染。
 
 这一步的内容可以查看 step5 文件夹。
 
+---
 
-
-到此我们的这个模板项目就完成了。你可以在GitHub上看到完整的项目代码。
+到此我们的这个模板项目就完成了。你可以在[GitHub上的这个项目中](https://github.com/noiron/react-webpack-babel-boilerplate)看到完整的项目代码。
