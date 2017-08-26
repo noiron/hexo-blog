@@ -2,6 +2,10 @@ type: "demo"
 comments: false
 ---
 
+- 使用JavaScript开发的塔防游戏（仍在开发中）
+    - demo地址：http://www.wukai.me/tower-defense-js
+    - 源码地址：https://github.com/noiron/tower-defense-js
+
 - Path-following 程序（在Chrome中打开效果最佳）
     - demo地址：http://noiron.github.io/html-demo/path-following/
     - 功能：物体会跟随给定的路径前进
