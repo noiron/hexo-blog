@@ -7,9 +7,9 @@ tags: [socket.io, node.js, express.js]
 
 ## 项目背景介绍
 
-最近在写的项目中存在着社交模块，需要实现这样的一个功能：当发生了用户被点赞、评论、关注等操作时，需要由服务器向用户实时地推送一条消息。
+最近在写的项目中存在着社交模块，需要实现这样的一个功能：当发生了用户被点赞、评论、关注等操作时，需要由服务器向用户实时地推送一条消息。最终完成的项目地址为：[socket-message-push](https://github.com/noiron/socket-message-push)，这里将介绍一下实现的思路及部分代码。
 
-这里存在着这样的几个对象：
+项目的流程中存在着这样的几个对象：
 - 用 Java 实现的后端服务器
 - 用 Node.js 实现的消息推送服务器
 - 用户进行操作的客户端
@@ -27,9 +27,9 @@ tags: [socket.io, node.js, express.js]
 考虑消息推送服务器上必须记录下当前在线用户的信息，这样才能向特定的用户推送消息。所以当用户登录时，必须将自身的用户信息发到 Node.js 服务器上。为了达到这种双向的实时消息传递，很明显地考虑用 WebSocket 来实现。既然我们在消息推送服务器上使用了 Node.js，我们就有了一个很方便的选项：socket.io。
 
 
-## socket.io 介绍
+## Socket.io 介绍
 
-[socket.io](https://socket.io)是一个用 JavaScript 实现的实时双向通信的库，利用它来实现我们的功能会很简单。
+[Socket.io](https://socket.io)是一个用 JavaScript 实现的实时双向通信的库，利用它来实现我们的功能会很简单。
 
 `socket.io` 包含两个部分：
 - 服务器端（server）：运行在 Node.js 服务器上
