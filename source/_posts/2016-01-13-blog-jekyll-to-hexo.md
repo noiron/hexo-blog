@@ -56,7 +56,7 @@ categories:
 
 在默认情况下，首页的菜单项显示为繁体中文。
 
-![](/img/2016-01-13-traditional-chinese.png)
+![](/asset/images/2016-01-13-traditional-chinese.png)
 
 修改在 themes/yilia 文件夹下的 _config.yml 中的语言项：
 

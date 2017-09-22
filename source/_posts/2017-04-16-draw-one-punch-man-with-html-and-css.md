@@ -103,13 +103,13 @@ transform: rotate(20deg);
 
 最后就得到了琦玉的头像：
 
-![](./../img/2017-04-10-one-punch-man-not-completed.png)
+![](/asset/images/2017-04-10-one-punch-man-not-completed.png)
 
 额，秃子，你谁啊！？
 
 看来不是所有的光头都叫琦玉，还需要对细节进行一点调整：
 
-![](./../img/2017-04-10-one-punch-man.png)
+![](/asset/images/2017-04-10-one-punch-man.png)
 
 OK，这样就有点像琦玉老师了。最后，如果你愿意的话，还可以用`transition`属性来稍微加上点动画效果。
 
