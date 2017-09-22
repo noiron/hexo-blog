@@ -27,12 +27,12 @@ tags: [socket.io, node.js, express.js]
 
 考虑消息推送服务器上必须记录下当前在线用户的信息，这样才能向特定的用户推送消息。所以当用户登录时，必须将自身的用户信息发到 Node.js 服务器上。为了达到这种双向的实时消息传递，很明显地考虑用 WebSocket 来实现。既然我们在消息推送服务器上使用了 Node.js，我们就有了一个很方便的选项：socket.io。
 
-
 ## Socket.io 介绍
 
 [Socket.io](https://socket.io)是一个用 JavaScript 实现的实时双向通信的库，利用它来实现我们的功能会很简单。
 
 `socket.io` 包含两个部分：
+
 - 服务器端（server）：运行在 Node.js 服务器上
 - 客户端（client）：运行在浏览器中
 
@@ -48,7 +48,7 @@ io.on('connection', function(socket){
 
 关于 Socket.io 还有一点需要注意：Socke.io 并不完全是 WebSocket 的实现。
 
-> Note: Socket.IO is not a WebSocket implementation. Although Socket.IO indeed uses WebSocket as a transport when possible, it adds some metadata to each packet: the packet type, the namespace and the ack id when a message acknowledgement is needed. 
+> Note: Socket.IO is not a WebSocket implementation. Although Socket.IO indeed uses WebSocket as a transport when possible, it adds some metadata to each packet: the packet type, the namespace and the ack id when a message acknowledgement is needed.
 
 接下来我们需要用 Express.js 来建立一个服务器端程序，并在其中引入 Socket.io。
 
@@ -88,7 +88,7 @@ http.listen(port, function() {
 
 现在即可在 `localhost:4001` 查看效果了。
 
-### 引入 socket.io 
+### 引入 socket.io
 
 现在已经有了一个基础的 Express 服务器，接下来需要将 Socket.io 加入其中。
 
@@ -115,14 +115,13 @@ socket.broadcast.emit('new_user', {});
 
 这一行代码表示 `socket` 将向当前所有与 `server` 建立了连接的 `client`（不包括自己） 广播一条名为 `new_user` 的消息。
 
-### 后端推送消息的处理流程 
+### 后端推送消息的处理流程
 
 0. 在 Node 服务器建立一个用户信息和 socket id 的映射表，因为同一用户可能打开了多个页面，所以他的 socket id 可能存在多个值。当用户建立连接时，往其中添加值；用户断开连接后，删除相应值。
 
 1. 当 Java 后台存在需要推送的消息时，会向 Node 服务器的 `/api` 路径 post 一条消息，其中包括用于标识用户的 tokenId 和其它数据。
 
 2. Node 服务器接收到 post 请求后，对请求内容进行处理。根据 tokenId 找出与该用户对应的 socket id，socket.io 会根据 id 来向用户推送消息。
-
 
 ### 对用户信息的处理
 
@@ -247,10 +246,10 @@ GitHub 上的项目地址：[socket-message-push](https://github.com/noiron/sock
 
 现在利用 Postman 向 `localhost:4001/api` post 如下的一条信息：
 
-    { 
+    {
         // tokens 数组表示你想向哪个用户推送消息
-    	"tokens": ["1", "2"], 
-    	"data": "You shall not pass!!!"
+        "tokens": ["1", "2"],
+        "data": "You shall not pass!!!"
     }
 
 ![postman-post-a-message](/asset/images/2017-08-27-postman-post-msg.png)
