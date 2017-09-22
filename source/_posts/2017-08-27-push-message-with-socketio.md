@@ -10,6 +10,7 @@ tags: [socket.io, node.js, express.js]
 最近在写的项目中存在着社交模块，需要实现这样的一个功能：当发生了用户被点赞、评论、关注等操作时，需要由服务器向用户实时地推送一条消息。最终完成的项目地址为：[socket-message-push](https://github.com/noiron/socket-message-push)，这里将介绍一下实现的思路及部分代码。
 
 项目的流程中存在着这样的几个对象：
+
 - 用 Java 实现的后端服务器
 - 用 Node.js 实现的消息推送服务器
 - 用户进行操作的客户端
@@ -104,7 +105,7 @@ io.on('connection', function(socket) {
 
 函数的参数 `socket` 代表的是当前的 `client` 和 `server` 间建立的这个连接。可在 `client` 程序中将这个建立的 socket 连接打印出来，如下图所示：
 
-![](../img/2017-08-16-socket-attribute.png)
+![](/asset/images/2017-08-16-socket-attribute.png)
 
 其中的 `id` 属性可以用于标识出这一连接，从而 `server` 可以向特定的用户发送消息。
 
@@ -252,11 +253,11 @@ GitHub 上的项目地址：[socket-message-push](https://github.com/noiron/sock
     	"data": "You shall not pass!!!"
     }
 
-![postman-post-a-message](../img/2017-08-27-postman-post-msg.png)
+![postman-post-a-message](/asset/images/2017-08-27-postman-post-msg.png)
 
 至此，如果一切顺利，你应该能够在 client 的控制台中看到收到的消息了。
 
-![client-message](../img/2017-08-27-client-receive-msg.png)
+![client-message](/asset/images/2017-08-27-client-receive-msg.png)
 
 你可以打开多个 client 页面，输入不同的 tokenId，然后检查消息是否发送给了正确的用户。
 
