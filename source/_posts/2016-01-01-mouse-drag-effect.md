@@ -16,7 +16,7 @@ categories:
 
 整个登录对话框（dialog）分为两个大的部分，上部的标题（dialogTitle）和下部的内容部分（dialogContent）。当我们点击在标题部分时，将会触发相应的拖拽效果。
 
-![对话框结构分析](/img/2016-1-1-mouse-drag-dialog.png)
+![对话框结构分析](/asset/images/2016-1-1-mouse-drag-dialog.png)
 
 <!-- more -->
 

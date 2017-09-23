@@ -8,7 +8,7 @@ categories:
 
 前段时间电影《疯狂动物城》上映了，然后我的知乎首页就被它刷屏了。虽然我对这部电影没有任何意见，但作为一个还没去电影院看过的人来说，每看到相关问题一次都是无情的剧透，于是我毅然屏蔽了“疯狂动物园”这个话题。本以为问题解决了，但是接下来我又被迫看到这个问题：
 
-![](img/2016-03-25-zhihu-filter1.png)
+![](/asset/images/2016-03-25-zhihu-filter1.png)
 
 问题上添加的五个话题无一命中，我又被剧透了一脸。算了，既然知乎的屏蔽规则靠不住，那就自己动手吧。这样我的Chrome浏览器扩展——ZhihuFilter就诞生了，[点击这里查看Github上的项目](https://github.com/noiron/ZhihuFilter)。
 
@@ -16,7 +16,7 @@ categories:
 
 其实扩展的功能很简单，当打开知乎首页后，扩展会依次检查你的屏蔽关键词列表是否出现在了某一个答案中，如果出现了，就会把这个答案隐藏，取而代之的是提示信息和一个展开答案的按钮。效果如下图所示：
 
-![](img/2016-03-25-zhihu-filter-demo1.png)
+![](/asset/images/2016-03-25-zhihu-filter-demo1.png)
 
 你可以点击图中的按钮来查看答案，之后可以选择再次隐藏或展开。
 
@@ -24,11 +24,11 @@ categories:
 
 当你安装了扩展后，会在地址栏的右侧显示出图标
 
-![icon](img/2016-03-25-icon.png)
+![icon](/asset/images/2016-03-25-icon.png)
 
 点击图标后，将会出现设置屏蔽词的界面
 
-![popup页面](img/2016-03-25-popup.png)
+![popup页面](/asset/images/2016-03-25-popup.png)
 
 你可以在这个页面中设置你想屏蔽的词语。
 
@@ -253,6 +253,6 @@ observe方法接收两个参数：
 
 在我的设想中，扩展可以提供一些选项，比如正则表达式的支持，再比如除了首页外，在答案页面是否也需要提供屏蔽功能。这些选项会在之后逐步加入。
 
-由于Chrome的设置，不能够安装Web Store中没有的程序。而发布扩展需要先付$5，我没有信用卡，也就暂时没有发布扩展。如果想尝试一下扩展的话，可以直接下载[Github中的代码](https://github.com/noiron/ZhihuFilter)到本地。在Chrome浏览器的菜单中选择 More tools -> Extensions，进入扩展页面后，勾选右上角的Developer mode，选择Load unpacked extension，选择扩展文件夹即可。 
+由于Chrome的设置，不能够安装Web Store中没有的程序。而发布扩展需要先付$5，我没有信用卡，也就暂时没有发布扩展。如果想尝试一下扩展的话，可以直接下载[Github中的代码](https://github.com/noiron/ZhihuFilter)到本地。在Chrome浏览器的菜单中选择 More tools -> Extensions，进入扩展页面后，勾选右上角的Developer mode，选择Load unpacked extension，选择扩展文件夹即可。
 
 欢迎使用后提出建议。
