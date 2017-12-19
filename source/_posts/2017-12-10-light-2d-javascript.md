@@ -70,7 +70,14 @@ $$F\left( x,y\right) =\int ^{2\pi }_{0}L\left( x,y,\theta \right) d\theta$$
  - 终结于光源的表面，则 (x, y) 点在 $\theta$ 方向能获得光照
  - 与光源无交点，则此方向上无光照
 
-但我们需要对这条线段的长度加以限制，所以逐步加长线段的长度，如果线段终点在光源的表面或内部，则获得光照。当步数达到 `MAX_STEP` 或距离达到 `MAX_DISTANCE`，停止计算，在此方向上获得的光照为0。此即原文中提到的**光线步进（ray marching）**方法（又称为**球体追踪／sphere tracing**）。
+但我们需要对这条线段的长度加以限制，所以逐步加长线段的长度，如果线段终点在光源的表面或内部，则获得光照。当步数达到 `MAX_STEP` 或距离达到 `MAX_DISTANCE`，停止计算，在此方向上获得的光照为0。
+
+这里需要利用**带符号距离场（signed distance field, SDF）**来表示出当前的点与场景的最近距离，每次步进此距离能保证不会进入光源的内部。如下图中，每个圆的半径均为圆心和图中形状的最近距离，则按 P0 -> P1 -> P2 -> ... 的顺序前进能保证不会和图中的形状相交。 
+
+![sphere-tracing](/asset/images/2017-12-10-sphere-tracing.jpg)
+（图源：https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter08.html）
+
+此即原文中提到的**光线步进（ray marching）**方法（又称为**球体追踪／sphere tracing**）。
 
 
 ## JavaScript 的实现
