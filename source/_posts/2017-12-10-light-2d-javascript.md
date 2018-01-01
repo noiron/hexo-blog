@@ -153,3 +153,9 @@ function trace(ox, oy, dx, dy) {
 ## 参考资料
 
 [Canvas 操作图像像素](https://github.com/YIXUNFE/blog/issues/12)
+
+---
+
+[**2018-01-01 更新**]
+在 GitHub 上建立了一个项目，准备将《用C语言画光》系列文章中的代码都移植到 JavaScipt 中来。
+项目地址：[light2d-javascript](https://github.com/noiron/light2d-javascript)
