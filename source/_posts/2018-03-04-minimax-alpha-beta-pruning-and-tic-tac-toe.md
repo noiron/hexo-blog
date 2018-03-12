@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Minimax 和 Alpha-beta 剪枝算法简介，以及以此实现的井字棋游戏（Tic-tac-toe）
+title: Minimax 和 Alpha-beta 剪枝算法简介，及以此实现的井字棋游戏（Tic-tac-toe）
 date: 2018-03-04
 tags: [minimax, alpha-beta pruning, 游戏, javascript, 算法]
 ---
