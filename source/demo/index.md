@@ -6,7 +6,12 @@ comments: false
 
 ---
 
-- 使用JavaScript开发的塔防游戏（仍在开发中）
+- 使用 Draft.js 开发的富文本编辑器
+    - [在线查看](http://www.wukai.me/draft-editor/)
+    - [源码地址](https://github.com/noiron/draft-editor)
+
+
+- 使用JavaScript开发的塔防游戏（放弃开发中。。。）
     - [在线查看](http://www.wukai.me/tower-defense-js)
     - [源码地址](https://github.com/noiron/tower-defense-js)
 
