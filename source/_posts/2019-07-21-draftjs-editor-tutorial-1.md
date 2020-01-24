@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 从插入图片功能的实现来介绍如何用 Draft.js 编写富文本编辑器
+title: 从插入图片功能的实现来介绍 Draft.js 富文本编辑器
 date:   2019-07-21
 tags: [draft.js, 编辑器]
 ---
